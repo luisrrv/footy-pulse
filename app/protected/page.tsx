@@ -1,6 +1,8 @@
 import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
+import { getFollowed, getPlayers } from "@/utils/supabase/requests";
+import PlayerCard from "@/components/PlayerCard";
 import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
 import Header from "@/components/Header";
 import { redirect } from "next/navigation";
@@ -16,6 +18,19 @@ export default async function ProtectedPage() {
     return redirect("/login");
   }
 
+  const onAddClick = async (playerId: string) => {
+    "use server";
+    console.log('adding player to followed list');
+  };
+
+    const followed = await getFollowed(user.id);
+    let players = [];
+    if (!followed || followed.length == 0) {
+      players = await getPlayers();
+    }
+    console.log("🚀 ~ ProtectedPage ~ followed:", followed);
+    console.log("🚀 ~ ProtectedPage ~ all players:", players);
+
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <div className="w-full">
@@ -24,8 +39,8 @@ export default async function ProtectedPage() {
           user
         </div>
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-            <DeployButton />
+          <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm">
+            {/* <DeployButton /> */}
             <AuthButton />
           </div>
         </nav>
@@ -34,8 +49,23 @@ export default async function ProtectedPage() {
       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
         <Header />
         <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          <FetchDataSteps />
+          {followed && followed.length > 0 ? (
+            <>
+              <h3 className="font-bold text-xl mb-4 w-full text-center">Followed Players</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap">
+                {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} />)}
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className="font-bold text-xl mb-4 w-full text-center">Choose players to get updates from</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap	">
+                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} />)}
+              </div>
+            </>
+          )}
+          {/* <h2 className="font-bold text-4xl mb-4">Next steps</h2> */}
+          {/* <FetchDataSteps /> */}
         </main>
       </div>
 
