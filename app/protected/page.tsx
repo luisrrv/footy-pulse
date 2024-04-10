@@ -1,7 +1,7 @@
 import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import { getFollowed, getPlayers } from "@/utils/supabase/requests";
+import { getFollowed, getPlayers, addPlayerToFollowed, removePlayerFromFollowed } from "@/utils/supabase/requests";
 import PlayerCard from "@/components/PlayerCard";
 import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
 import Header from "@/components/Header";
@@ -18,9 +18,24 @@ export default async function ProtectedPage() {
     return redirect("/login");
   }
 
-  const onAddClick = async (playerId: string) => {
+  const onAddClick = async (playerId: any) => {
     "use server";
-    console.log('adding player to followed list');
+    const added = await addPlayerToFollowed(user.id, playerId);
+    if (added) {
+      redirect("/protected");
+    } else {
+      alert("Couldn't add player to followed. Try again.")
+    }
+  };
+
+  const onRemoveClick = async (playerId: any) => {
+    "use server";
+    const removed = await removePlayerFromFollowed(user.id, playerId);
+    if (removed) {
+      redirect("/protected");
+    } else {
+      alert("Couldn't remove player from followed. Try again.")
+    }
   };
 
     const followed = await getFollowed(user.id);
@@ -28,8 +43,6 @@ export default async function ProtectedPage() {
     if (!followed || followed.length == 0) {
       players = await getPlayers();
     }
-    console.log("🚀 ~ ProtectedPage ~ followed:", followed);
-    console.log("🚀 ~ ProtectedPage ~ all players:", players);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -53,14 +66,14 @@ export default async function ProtectedPage() {
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center">Followed Players</h3>
               <div className="players-grid flex flex-row justify-center align-center flex-wrap">
-                {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} />)}
+                {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
             </>
           ) : (
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center">Choose players to get updates from</h3>
               <div className="players-grid flex flex-row justify-center align-center flex-wrap	">
-                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} />)}
+                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
             </>
           )}

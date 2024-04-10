@@ -1,6 +1,8 @@
 import { createClient } from './client';
 
-export const getFollowed = async ( userId: any ) => {
+export const getFollowed = async (userId: any) => {
+    if (!userId) return [];
+    console.log('getting followed player IDs...');
     const supabase = await createClient();
     const { data: followedIds, error } = await supabase
         .from("followed")
@@ -13,12 +15,14 @@ export const getFollowed = async ( userId: any ) => {
     }
 
     if (followedIds && followedIds.length) {
-        console.log('getting followed players data...', followedIds);
+        console.log('getting followed players data...');
+
+        const playerIds = followedIds.map((followedObj: any) => followedObj.player_id);
 
         const { data: players, error } = await supabase
             .from("players")
             .select("*")
-            .in("footballapi_id",followedIds);
+            .in("footballapi_id", playerIds);
         
         if (error) {
             console.error('Error fetching followed:', error.message);
@@ -31,7 +35,7 @@ export const getFollowed = async ( userId: any ) => {
     return [];
 };
 
-export const getPlayers = async ( ) => {
+export const getPlayers = async () => {
     console.log('getting ALL players from db...');
 
     const supabase = await createClient();
@@ -45,4 +49,40 @@ export const getPlayers = async ( ) => {
     }
 
     return players;
+};
+
+export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
+    if (!userId || !footballapiId) return false;
+    console.log('adding player to followed table...');
+
+    const supabase = await createClient();
+    const { data: res, error } = await supabase
+        .from("followed")
+        .insert({"user_id": userId, "player_id": footballapiId});
+
+    if (error) {
+        console.error('Error fetching players:', error.message);
+        return false;
+    }
+
+    return true;
+};
+
+export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) => {
+    if (!userId || !footballapiId) return false;
+    console.log('adding player to followed table...');
+
+    const supabase = await createClient();
+    const { data: res, error } = await supabase
+        .from("followed")
+        .delete()
+        .eq("user_id", userId)
+        .eq("player_id", footballapiId);
+
+    if (error) {
+        console.error('Error fetching players:', error.message);
+        return false;
+    }
+
+    return true;
 };

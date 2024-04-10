@@ -33,6 +33,13 @@
 .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
 }
+.animate-in-slow {
+  animation: animateIn 0.6s ease 0.15s both;
+}
+
+.delay {
+  animation-delay: 800ms;
+}
 
 @keyframes animateIn {
   from {
