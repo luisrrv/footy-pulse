@@ -42,7 +42,7 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
                 </div>
                 {add ? (
                     <button
-                        className="cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-blue-600 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition duration-300"
+                        className="cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-indigo-700 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition duration-300"
                         type="button"
                         onClick={() => {onAddClick(playerData?.footballapi_id || "")}}
                     >
