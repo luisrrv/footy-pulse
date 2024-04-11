@@ -3,8 +3,8 @@ import { createClient } from './client';
 export const getUsers = async () => {
     const supabase = await createClient();
     const { data: users, error } = await supabase
-        .from("users")
-        .select("id");
+        .from("emails")
+        .select();
 
     if (error) {
         console.error('Error fetching users:', error.message);
