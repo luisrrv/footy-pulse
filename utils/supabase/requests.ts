@@ -1,5 +1,18 @@
 import { createClient } from './client';
 
+export const getUsers = async () => {
+    const supabase = await createClient();
+    const { data: users, error } = await supabase
+        .from("users")
+        .select("id");
+
+    if (error) {
+        console.error('Error fetching users:', error.message);
+        return [];
+    }
+    return users;
+}
+
 export const getFollowed = async (userId: any) => {
     if (!userId) return [];
     console.log('getting followed player IDs...');
