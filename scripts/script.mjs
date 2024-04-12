@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as line from "@line/bot-sdk";
 import { getUsers, getFollowed } from '../utils/supabase/script_requests.js';
 
-export default async function lineBotHandler(user_id, message) {
+async function lineBotHandler(user_id, message) {
   const config = {
     // channelAccessToken: process.env.NEXT_PUBLIC_LINE_CHANNEL_ACCESS_TOKEN || "",
     // channelSecret: process.env.NEXT_PUBLIC_LINE_CHANNEL_SECRET || "",
@@ -17,7 +17,8 @@ export default async function lineBotHandler(user_id, message) {
     // const { message, user_id } = req.body;
     
     if (!user_id || !message) {
-        return res.status(400).json({ error: "Invalid request data." });
+        // return res.status(400).json({ error: "Invalid request data." });
+        console.error("Invalid request data.");
     }
 
     await client.pushMessage(user_id, {
@@ -25,10 +26,10 @@ export default async function lineBotHandler(user_id, message) {
         text: message,
     });
 
-    res.status(200).json({ message: `Message: "${message}" has been sent.` });
+    console.log(`Message: "${message}" has been sent.`);
   } catch (e) {
     console.error("Line API Error:", e);
-    res.status(500).json({ error: "Failed to send message." });
+    console.error("Failed to send message.");
   }
 }
 
@@ -41,7 +42,7 @@ async function sendData(user, playersData) {
     console.log(`Sending data to user ${user.line_id}`, playersData);
 
     const message =  "This is a test message sent from FootyPulse.";
-    lineBotHandler(user.line_id, message);
+    const lineRes = await lineBotHandler(user.line_id, message);
     // const lineRes = await axios.post("pages/api/linebot", {
     //   message: "This is a test message sent from FootyPulse.",
     //   user_id: user.line_id
