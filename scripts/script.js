@@ -3,8 +3,16 @@ import { getUsers, getFollowed } from '@/utils/supabase/requests.ts';
 
 async function sendData(user, playersData) {
   try {
-    // TODO: Send data to user
-    console.log(`Sending data to user ${user.id}`, playersData);
+    if(!user.line_id) {
+      console.error(`Error. user:${user.id} has not set a LINE user ID.`);
+      return;
+    }
+    console.log(`Sending data to user ${user.line_id}`, playersData);
+    const lineRes = await axios.post("/api/linebot", {
+      message: "This is a test message sent from FootyPulse.",
+      user_id: user.line_id
+    });
+    console.log("🚀 ~~~~~ lineRes:", lineRes);
   } catch (error) {
     console.error(`Error sending data to user ${user.id}:`, error);
   }

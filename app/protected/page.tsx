@@ -1,7 +1,13 @@
 // import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import { getFollowed, getPlayers, addPlayerToFollowed, removePlayerFromFollowed } from "@/utils/supabase/requests";
+import { 
+  getFollowed, 
+  getPlayers, 
+  addPlayerToFollowed, 
+  removePlayerFromFollowed, 
+  addLineId,
+} from "@/utils/supabase/requests";
 import PlayerCard from "@/components/PlayerCard";
 // import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
 // import Header from "@/components/Header";
@@ -27,7 +33,7 @@ export default async function ProtectedPage() {
       alert("Couldn't add player to followed. Try again.")
     }
   };
-
+  
   const onRemoveClick = async (playerId: any) => {
     "use server";
     const removed = await removePlayerFromFollowed(user.id, playerId);
@@ -38,11 +44,11 @@ export default async function ProtectedPage() {
     }
   };
 
-    const followed = await getFollowed(user.id);
-    let players = [];
-    if (!followed || followed.length == 0) {
-      players = await getPlayers();
-    }
+  const followed = await getFollowed(user.id);
+  let players = [];
+  if (!followed || followed.length == 0) {
+    players = await getPlayers();
+  }
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">

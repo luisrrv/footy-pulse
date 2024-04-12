@@ -74,7 +74,7 @@ export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
         .insert({"user_id": userId, "player_id": footballapiId});
 
     if (error) {
-        console.error('Error fetching players:', error.message);
+        console.error('Error following player:', error.message);
         return false;
     }
 
@@ -83,7 +83,7 @@ export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
 
 export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) => {
     if (!userId || !footballapiId) return false;
-    console.log('adding player to followed table...');
+    console.log('removing player to followed table...');
 
     const supabase = await createClient();
     const { data: res, error } = await supabase
@@ -93,7 +93,26 @@ export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) 
         .eq("player_id", footballapiId);
 
     if (error) {
-        console.error('Error fetching players:', error.message);
+        console.error('Error unfollowing player:', error.message);
+        return false;
+    }
+
+    return true;
+};
+
+export const addLineId = async (userId: any, lineId: any) => {
+    if (!userId) return false;
+    console.log('adding line user ID to emails table...');
+
+    const supabase = await createClient();
+    const { data: res, error } = await supabase
+        .from("emails")
+        .insert({"line_id": lineId})
+        .eq("user_id", userId);
+    console.log("🚀 ~ addLineId ~ res:", res);
+
+    if (error) {
+        console.error('Error adding line user ID:', error.message);
         return false;
     }
 
