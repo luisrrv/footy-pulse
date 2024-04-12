@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +12,7 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",
+    "axios": "^1.6.8",
     "geist": "^1.2.1",
     "next": "latest",
     "postcss": "8.4.33",
