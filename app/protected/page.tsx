@@ -30,7 +30,7 @@ export default async function ProtectedPage() {
     if (added) {
       redirect("/protected");
     } else {
-      alert("Couldn't add player to followed. Try again.")
+      console.error("Couldn't add player to followed. Try again.")
     }
   };
   
@@ -40,7 +40,7 @@ export default async function ProtectedPage() {
     if (removed) {
       redirect("/protected");
     } else {
-      alert("Couldn't remove player from followed. Try again.")
+      console.error("Couldn't remove player from followed. Try again.")
     }
   };
 

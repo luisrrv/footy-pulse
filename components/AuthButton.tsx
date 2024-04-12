@@ -31,7 +31,7 @@ export default async function AuthButton() {
     if (added) {
       redirect("/protected");
     } else {
-      alert("Couldn't add line user ID. Try again.")
+      console.error("Couldn't add line user ID. Try again.");
     }
   };
 
@@ -39,7 +39,7 @@ export default async function AuthButton() {
     <div className="flex items-center gap-2">
       <div className="flex flex-row align-center gap-2">
         <p className="hidden sm:block pt-1">Hey, {user.email}!</p>
-        <span><LineButton user={user} /></span>
+        <span><LineButton onAddLineIdClick={onAddLineIdClick} /></span>
       </div>
       <form action={signOut}>
         <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">

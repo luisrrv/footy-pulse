@@ -107,9 +107,8 @@ export const addLineId = async (userId: any, lineId: any) => {
     const supabase = await createClient();
     const { data: res, error } = await supabase
         .from("emails")
-        .insert({"line_id": lineId})
+        .update({"line_id": lineId})
         .eq("user_id", userId);
-    console.log("🚀 ~ addLineId ~ res:", res);
 
     if (error) {
         console.error('Error adding line user ID:', error.message);

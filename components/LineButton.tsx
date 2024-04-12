@@ -3,17 +3,11 @@ import React, { useEffect, useState } from 'react';
 import LinePopup from "@/components/LinePopup";
 
 interface Props {
-    user: any;
+    onAddLineIdClick: Function;
 }
 
-const PlayerCard: React.FC<Props> = ({ user }: Props) => {
+const PlayerCard: React.FC<Props> = ({ onAddLineIdClick }: Props) => {
     const [showPopup, setShowPopup] = useState(false);
-
-    // useEffect(() => {
-    //     if (showPopup){
-    //         // TODO: show popup component in the current page
-    //     }
-    // }, [showPopup])
 
     return (
         <>
@@ -23,7 +17,7 @@ const PlayerCard: React.FC<Props> = ({ user }: Props) => {
             >
                 LINE
             </button>
-            {showPopup && <LinePopup onClose={() => setShowPopup(false)} />}
+            {showPopup && <LinePopup onClose={() => setShowPopup(false)} onAddLineIdClick={onAddLineIdClick} />}
         </>
     );
 };

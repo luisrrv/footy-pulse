@@ -1,20 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 interface LinePopupProps {
     onClose: () => void;
+    onAddLineIdClick: Function;
 }
 
-const LinePopup: React.FC<LinePopupProps> = ({ onClose }) => {
+const LinePopup: React.FC<LinePopupProps> = ({ onClose, onAddLineIdClick }) => {
+    const [inputValue, setInputValue] = useState<string>('');
+    const [disabled, setDisabled] = useState<boolean>(true);
+
+    useEffect(() => {
+        if(inputValue) setDisabled(false);
+        else setDisabled(true);
+    }, [inputValue])
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-background text-foreground rounded-lg p-8 max-w-md w-full">
-                <h2 className="text-lg font-semibold mb-4">Set up your LINE user ID</h2>
-                {/* Add Line user ID form */}
+        <div className="bg-background/50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50">
+            <div className='absolute top-3 right-3 flex justify-center align-center cursor-pointer text-foreground' onClick={onClose}>
+                <XMarkIcon className='h-6 w-6' />
+            </div>
+
+            <div className="flex flex-col justify-between align-center bg-background text-foreground rounded-lg p-8 max-w-md w-full border border border-1 border-gray-500">
+                <h2 className="text-lg font-extrabold tracking-tighter  mb-4">Where should we send you player updates?</h2>
+                <label className="text-md mb-3" htmlFor="email">
+                    LINE user ID:
+                    </label>
+                    <input
+                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        name="userId"
+                        placeholder="Enter your LINE user ID"
+                        onChange={(e) => {setInputValue(e.target.value)}}
+                    />
                 <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                    onClick={onClose}
+                    className={`bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-4 mt-3 rounded-lg min-w-[100px] tracking-wide uppercase font-extrabold ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}
+                    onClick={() => {onAddLineIdClick(inputValue); onClose()}}
                 >
-                    Close
+                    Save
                 </button>
             </div>
         </div>
