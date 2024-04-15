@@ -38,8 +38,6 @@ export async function getFollowed(userId) {
     }
 
     if (followedIds && followedIds.length) {
-        console.log('getting followed players data...');
-
         const playerIds = followedIds.map((followedObj) => followedObj.player_id);
 
         const { data: players, error } = await supabase

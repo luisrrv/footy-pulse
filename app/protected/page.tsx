@@ -78,7 +78,7 @@ export default async function ProtectedPage() {
           ) : (
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center">Choose players to get updates from</h3>
-              <div className="players-grid flex flex-row justify-center align-center flex-wrap	">
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-12">
                 {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
             </>

@@ -23,7 +23,7 @@ export default async function AuthButton() {
     "use server";
 
     if (!user) return;
-    const added = await addDiscordWebhookUrl(user.id, webhookUrl);
+    const added = await addDiscordWebhookUrl(user?.id || "", webhookUrl);
     if (added) {
       redirect("/protected");
     } else {

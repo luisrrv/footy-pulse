@@ -15,7 +15,7 @@ export const getUsers = async () => {
 
 export const getFollowed = async (userId: any) => {
     if (!userId) return [];
-    console.log('getting followed player IDs...');
+
     const supabase = await createClient();
     const { data: followedIds, error } = await supabase
         .from("followed")
@@ -28,8 +28,6 @@ export const getFollowed = async (userId: any) => {
     }
 
     if (followedIds && followedIds.length) {
-        console.log('getting followed players data...');
-
         const playerIds = followedIds.map((followedObj: any) => followedObj.player_id);
 
         const { data: players, error } = await supabase
@@ -49,8 +47,6 @@ export const getFollowed = async (userId: any) => {
 };
 
 export const getPlayers = async () => {
-    console.log('getting ALL players from db...');
-
     const supabase = await createClient();
     const { data: players, error } = await supabase
         .from("players")
@@ -65,8 +61,6 @@ export const getPlayers = async () => {
 };
 
 export const getDiscordData = async (userId: string) => {
-    console.log("getting user's discord data from db...");
-
     const supabase = await createClient();
     const { data: data, error } = await supabase
     .from("users_data")
@@ -83,7 +77,6 @@ export const getDiscordData = async (userId: string) => {
 
 export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
     if (!userId || !footballapiId) return false;
-    console.log('adding player to followed table...');
 
     const supabase = await createClient();
     const { data: res, error } = await supabase
@@ -100,7 +93,6 @@ export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
 
 export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) => {
     if (!userId || !footballapiId) return false;
-    console.log('removing player to followed table...');
 
     const supabase = await createClient();
     const { data: res, error } = await supabase
@@ -119,7 +111,6 @@ export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) 
 
 export const addDiscordWebhookUrl = async (userId: any, webhookUrl: any) => {
     if (!userId) return false;
-    console.log('adding discord webhook URL to users_data table...');
 
     const supabase = await createClient();
     const { data: res, error } = await supabase
