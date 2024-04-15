@@ -4,10 +4,11 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 interface DiscordPopupProps {
     onClose: () => void;
     onAddDiscordWUrlClick: Function;
+    webhookUrl: string;
 }
 
-const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlClick }) => {
-    const [inputValue, setInputValue] = useState<string>('');
+const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlClick, webhookUrl }) => {
+    const [inputValue, setInputValue] = useState<string>(webhookUrl);
     const [disabled, setDisabled] = useState<boolean>(true);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlCl
                     <input
                         className="rounded-md px-4 py-2 bg-inherit border mb-6"
                         name="userId"
+                        defaultValue={inputValue||""}
                         placeholder="Enter your discord server's webhook URL"
                         onChange={(e) => {setInputValue(e.target.value)}}
                     />

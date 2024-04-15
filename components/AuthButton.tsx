@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { addDiscordWebhookUrl } from "@/utils/supabase/requests";
+import { addDiscordWebhookUrl, getDiscordData } from "@/utils/supabase/requests";
 import DiscordButton from "./DiscordButton";
 
 export default async function AuthButton() {
@@ -31,11 +31,19 @@ export default async function AuthButton() {
     }
   };
 
+  let webhookUrl = "";
+  if (user) {
+    const discordData = await getDiscordData(user.id);
+    if (discordData && discordData.length > 0) {
+      webhookUrl = discordData[0].discord_webhook_url;
+    }
+  }
+
   return user ? (
     <div className="flex items-center gap-2">
       <div className="flex flex-row align-center gap-2">
         <p className="hidden sm:block pt-1">Hey, {user.email}!</p>
-        <span><DiscordButton onAddDiscordWUrlClick={onAddDiscordWUrlClick} /></span>
+        <span><DiscordButton onAddDiscordWUrlClick={onAddDiscordWUrlClick} webhookUrl={webhookUrl} /></span>
       </div>
       <form action={signOut}>
         <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">

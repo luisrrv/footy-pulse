@@ -5,9 +5,10 @@ import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 
 interface Props {
     onAddDiscordWUrlClick: Function;
+    webhookUrl: string;
 }
 
-const PlayerCard: React.FC<Props> = ({ onAddDiscordWUrlClick }: Props) => {
+const PlayerCard: React.FC<Props> = ({ onAddDiscordWUrlClick, webhookUrl }: Props) => {
     const [showPopup, setShowPopup] = useState(false);
 
     return (
@@ -18,7 +19,7 @@ const PlayerCard: React.FC<Props> = ({ onAddDiscordWUrlClick }: Props) => {
             >
                 <Cog6ToothIcon className='h-5 w-5' />
             </button>
-            {showPopup && <DiscordPopup onClose={() => setShowPopup(false)} onAddDiscordWUrlClick={onAddDiscordWUrlClick} />}
+            {showPopup && <DiscordPopup onClose={() => setShowPopup(false)} onAddDiscordWUrlClick={onAddDiscordWUrlClick} webhookUrl={webhookUrl} />}
         </>
     );
 };

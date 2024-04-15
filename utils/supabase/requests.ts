@@ -64,6 +64,23 @@ export const getPlayers = async () => {
     return players;
 };
 
+export const getDiscordData = async (userId: string) => {
+    console.log("getting user's discord data from db...");
+
+    const supabase = await createClient();
+    const { data: data, error } = await supabase
+    .from("users_data")
+        .select("discord_webhook_url")
+        .eq("user_id", userId)
+
+    if (error) {
+        console.error('Error fetching discord data:', error.message);
+        return [];
+    }
+
+    return data;
+};
+
 export const addPlayerToFollowed = async (userId: any ,footballapiId: any) => {
     if (!userId || !footballapiId) return false;
     console.log('adding player to followed table...');
