@@ -9,10 +9,30 @@ async function discordHandler(webhookUrl, data) {
     day: 'numeric',
     year: 'numeric',
   });
+
+  await new Promise((resolve, reject) => {
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({content: `Your followed player(s) stats from FootyPulse (${currentDate}):\n\n`}),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          reject(new Error(`Could not send message: ${response.status}`));
+        }
+        resolve();
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+      });
+  });
   
   for (const playerData of data) {
     const content = `
-    ${playerData.name}'s stats (${currentDate}):
+    ${playerData.name}:
     Apps: ${playerData.apps}
     Goals: ${playerData.goals}
     PKs: ${playerData.penalties}
@@ -21,10 +41,9 @@ async function discordHandler(webhookUrl, data) {
     Dribbles: ${playerData.dribbles}
     Yellow Cards: ${playerData.yellow}
     Red Cards: ${playerData.red}\n
-    ~ FootyPulse
     `; 
 
-    return await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       fetch(webhookUrl, {
         method: 'POST',
         headers: {
