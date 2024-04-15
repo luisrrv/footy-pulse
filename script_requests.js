@@ -2,7 +2,6 @@ import { createClient } from '@supabase/supabase-js'
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 export async function getUsers() {
     var supabase = await createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,

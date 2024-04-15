@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUsers, getFollowed } from '../utils/supabase/script_requests.js';
+import { getUsers, getFollowed } from './script_requests.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
