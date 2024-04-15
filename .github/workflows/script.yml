@@ -1,0 +1,24 @@
+name: Run Script
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Schedule daily at 9 AM JST (0:00 UTC is 9:00 AM JST)
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: node script.mjs
