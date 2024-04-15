@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getUsers, getFollowed } from '../utils/supabase/script_requests.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 async function discordHandler(webhookUrl, data) {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -51,8 +53,7 @@ async function sendData(user, playersData) {
       return;
     }
     console.log(`Sending data to user ${user.id}`, playersData);
-    const discordRes = await discordHandler(user.discord_webhook_url, playersData);
-    console.log("~~~~~~  discordRes ~~~~~~", discordRes);
+    await discordHandler(user.discord_webhook_url, playersData);
   } catch (error) {
     console.error(`Error sending data to user ${user.id}:`, error);
   }
@@ -98,7 +99,6 @@ async function calculateAggregatedStats(statistics) {
 async function getData() {
   try {
     const users = await getUsers();
-    console.log("🚀 ~ getData ~ users:", users)
     if (!users || users.length === 0) return;
 
     for (const user of users) {
@@ -107,7 +107,6 @@ async function getData() {
       if (!players || players.length === 0) continue;
 
       for (const player of players) {
-        console.log("🚀 ~ getData ~ player:", player.footballapi_id);
         const response = await axios.request({
           method: 'GET',
           url: 'https://api-football-v1.p.rapidapi.com/v3/players',
@@ -116,13 +115,10 @@ async function getData() {
             season: '2023'
           },
           headers: {
-            // 'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
-            // 'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_API_HOST
-            'X-RapidAPI-Key': "f65b49ec54msh838136968741b19p1d0015jsn1629b985804a",
-            'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
+            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
+            'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_API_HOST
           }
         });
-        console.log("~~~~~~  FootballAPI response  ~~~~~~", response.data);
         
         if (response && response.data && response.data.results > 0 && response.data.response[0]) {
           const playerInfo = response.data.response[0]?.player;

@@ -16,7 +16,7 @@ const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlCl
     }, [inputValue])
 
     return (
-        <div className="bg-background/50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50">
+        <div className="animate-in bg-background/50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50">
             <div className='absolute top-3 right-3 flex justify-center align-center cursor-pointer text-foreground' onClick={onClose}>
                 <XMarkIcon className='h-6 w-6' />
             </div>

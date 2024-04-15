@@ -1,14 +1,14 @@
-// script_requests.js
-// import { createClient } from './client';
-
 import { createClient } from '@supabase/supabase-js'
-var supabase = createClient(
-    "https://chagefyfszuvkkcpdvax.supabase.co", 
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNoYWdlZnlmc3p1dmtrY3BkdmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1NjMxMzQsImV4cCI6MjAyODEzOTEzNH0.KfML-8LsC9vfxyeV5tr9502mjUICQ1nrMyJxwl4LW74"
-)
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 export async function getUsers() {
-    // const supabase = await createClient();
+    var supabase = await createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+
     const { data: users, error } = await supabase
         .from("users_data")
         .select()
@@ -23,8 +23,11 @@ export async function getUsers() {
 
 export async function getFollowed(userId) {
     if (!userId) return [];
-    console.log('getting followed player IDs...');
-    // const supabase = await createClient();
+    var supabase = await createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+
     const { data: followedIds, error } = await supabase
         .from("followed")
         .select("player_id")
