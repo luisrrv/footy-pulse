@@ -3,7 +3,7 @@ import { createClient } from './client';
 export const getUsers = async () => {
     const supabase = await createClient();
     const { data: users, error } = await supabase
-        .from("emails")
+        .from("users_data")
         .select();
 
     if (error) {
@@ -100,18 +100,18 @@ export const removePlayerFromFollowed = async (userId: any ,footballapiId: any) 
     return true;
 };
 
-export const addLineId = async (userId: any, lineId: any) => {
+export const addDiscordWebhookUrl = async (userId: any, webhookUrl: any) => {
     if (!userId) return false;
-    console.log('adding line user ID to emails table...');
+    console.log('adding discord webhook URL to users_data table...');
 
     const supabase = await createClient();
     const { data: res, error } = await supabase
-        .from("emails")
-        .update({"line_id": lineId})
+        .from("users_data")
+        .update({"discord_webhook_url": webhookUrl})
         .eq("user_id", userId);
 
     if (error) {
-        console.error('Error adding line user ID:', error.message);
+        console.error('Error adding discord webhook URL:', error.message);
         return false;
     }
 

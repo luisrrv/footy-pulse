@@ -6,7 +6,7 @@ import {
   getPlayers, 
   addPlayerToFollowed, 
   removePlayerFromFollowed, 
-  addLineId,
+  // addDiscordWebhookUrl,
 } from "@/utils/supabase/requests";
 import PlayerCard from "@/components/PlayerCard";
 // import FetchDataSteps from "@/components/tutorial/FetchDataSteps";

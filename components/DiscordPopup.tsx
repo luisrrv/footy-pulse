@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
-interface LinePopupProps {
+interface DiscordPopupProps {
     onClose: () => void;
-    onAddLineIdClick: Function;
+    onAddDiscordWUrlClick: Function;
 }
 
-const LinePopup: React.FC<LinePopupProps> = ({ onClose, onAddLineIdClick }) => {
+const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlClick }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [disabled, setDisabled] = useState<boolean>(true);
 
@@ -24,17 +24,17 @@ const LinePopup: React.FC<LinePopupProps> = ({ onClose, onAddLineIdClick }) => {
             <div className="flex flex-col justify-between align-center bg-background text-foreground rounded-lg p-8 max-w-md w-full border border border-1 border-gray-500">
                 <h2 className="text-lg font-extrabold tracking-tighter  mb-4">Where should we send you player updates?</h2>
                 <label className="text-md mb-3" htmlFor="email">
-                    LINE user ID:
+                    Discord webhook URL:
                     </label>
                     <input
                         className="rounded-md px-4 py-2 bg-inherit border mb-6"
                         name="userId"
-                        placeholder="Enter your LINE user ID"
+                        placeholder="Enter your discord server's webhook URL"
                         onChange={(e) => {setInputValue(e.target.value)}}
                     />
                 <button
-                    className={`bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-4 mt-3 rounded-lg min-w-[100px] tracking-wide uppercase font-extrabold ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}
-                    onClick={() => {onAddLineIdClick(inputValue); onClose()}}
+                    className={`bg-indigo-700 hover:bg-indigo-600 transition-colors duration-300 text-white py-2 px-4 mt-3 rounded-lg min-w-[100px] tracking-wide uppercase font-extrabold ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}
+                    onClick={() => {onAddDiscordWUrlClick(inputValue); onClose()}}
                 >
                     Save
                 </button>
@@ -43,4 +43,4 @@ const LinePopup: React.FC<LinePopupProps> = ({ onClose, onAddLineIdClick }) => {
     );
 };
 
-export default LinePopup;
+export default DiscordPopup;

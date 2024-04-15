@@ -10,9 +10,9 @@ var supabase = createClient(
 export async function getUsers() {
     // const supabase = await createClient();
     const { data: users, error } = await supabase
-        .from("emails")
+        .from("users_data")
         .select()
-        .not("line_id", "is", null);
+        .not("discord_webhook_url", "is", null);
 
     if (error) {
         console.error('Error fetching users:', error.message);

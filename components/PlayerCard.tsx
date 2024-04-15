@@ -43,7 +43,7 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
                 </div>
                 {add ? (
                     <button
-                        className="flex flex-row justify-center items-center gap-1 uppercase text-xs tracking-wide cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-indigo-700 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition duration-300"
+                        className="flex flex-row justify-center items-center gap-1 uppercase text-xs tracking-wide cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-indigo-700 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition-colors duration-300"
                         type="button"
                         onClick={() => {onAddClick(playerData?.footballapi_id || "")}}
                     >
@@ -52,7 +52,7 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
                     </button>
                 ): (
                     <button
-                        className="flex flex-row justify-center items-center gap-1 uppercase text-xs tracking-wide cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-red-600 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition duration-300"
+                        className="flex flex-row justify-center items-center gap-1 uppercase text-xs tracking-wide cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-red-600 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition-colors duration-300"
                         type="button"
                         onClick={() => {onRemoveClick(playerData?.footballapi_id || "")}}
                     >

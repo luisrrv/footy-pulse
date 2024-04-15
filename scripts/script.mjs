@@ -1,53 +1,58 @@
 import axios from 'axios';
-import * as line from "@line/bot-sdk";
 import { getUsers, getFollowed } from '../utils/supabase/script_requests.js';
 
-async function lineBotHandler(user_id, message) {
-  const config = {
-    // channelAccessToken: process.env.NEXT_PUBLIC_LINE_CHANNEL_ACCESS_TOKEN || "",
-    // channelSecret: process.env.NEXT_PUBLIC_LINE_CHANNEL_SECRET || "",
-    channelAccessToken: "Mj3t5Z9OKuHvKzVJ1RrtVSVl5IC8wPPG2j1QstLlRyemu9WbnQPXmk6G2kbR5+j8jlOHRY9in+pinlq+qN8zypmrOg09Lguu7jMYBhP2ZewLMblDsh32O8szK5LGdIkZMCCUbfALq4HwnnHHoLsbxgdB04t89/1O/w1cDnyilFU=",
-    channelSecret: "050b9f7910e6c87249e09023d18f1523"
-  };
+async function discordHandler(webhookUrl, data) {
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  
+  for (const playerData of data) {
+    const content = `
+    ${playerData.name}'s stats (${currentDate}):
+    Apps: ${playerData.apps}
+    Goals: ${playerData.goals}
+    PKs: ${playerData.penalties}
+    Assists: ${playerData.assists}
+    Saves: ${playerData.saves}
+    Dribbles: ${playerData.dribbles}
+    Yellow Cards: ${playerData.yellow}
+    Red Cards: ${playerData.red}\n
+    ~ FootyPulse
+    `; 
 
-  const client = new line.Client(config);
-
-  try {
-    console.log("~~~~~~~~~~~~~~~~~~~~~~", user_id, message);
-    // const { message, user_id } = req.body;
-    
-    if (!user_id || !message) {
-        // return res.status(400).json({ error: "Invalid request data." });
-        console.error("Invalid request data.");
-    }
-
-    await client.pushMessage(user_id, {
-        type: "text",
-        text: message,
+    return await new Promise((resolve, reject) => {
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({content: content}),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            reject(new Error(`Could not send message: ${response.status}`));
+          }
+          resolve();
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error);
+        });
     });
-
-    console.log(`Message: "${message}" has been sent.`);
-  } catch (e) {
-    console.error("Line API Error:", e);
-    console.error("Failed to send message.");
   }
 }
 
 async function sendData(user, playersData) {
   try {
-    if(!user.line_id) {
-      console.error(`Error. user:${user.id} has not set a LINE user ID.`);
+    if(!user.discord_webhook_url) {
+      console.error(`Error. user:${user.id} has not set a Discord webhook URL.`);
       return;
     }
-    console.log(`Sending data to user ${user.line_id}`, playersData);
-
-    const message =  "This is a test message sent from FootyPulse.";
-    const lineRes = await lineBotHandler(user.line_id, message);
-    // const lineRes = await axios.post("pages/api/linebot", {
-    //   message: "This is a test message sent from FootyPulse.",
-    //   user_id: user.line_id
-    // });
-    console.log("🚀 ~~~~~ lineRes:", lineRes);
+    console.log(`Sending data to user ${user.id}`, playersData);
+    const discordRes = await discordHandler(user.discord_webhook_url, playersData);
+    console.log("~~~~~~  discordRes ~~~~~~", discordRes);
   } catch (error) {
     console.error(`Error sending data to user ${user.id}:`, error);
   }
@@ -117,7 +122,7 @@ async function getData() {
             'X-RapidAPI-Host': "api-football-v1.p.rapidapi.com"
           }
         });
-        console.log("🚀 ~ FootballAPI ~ response:", response.data);
+        console.log("~~~~~~  FootballAPI response  ~~~~~~", response.data);
         
         if (response && response.data && response.data.results > 0 && response.data.response[0]) {
           const playerInfo = response.data.response[0]?.player;
