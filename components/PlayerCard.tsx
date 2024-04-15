@@ -7,10 +7,13 @@ interface Props {
     add?: boolean;
     onAddClick: (playerId: string) => void;
     onRemoveClick: (playerId: string) => void;
+    followed?: any[];
 }
 
-const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClick }: Props) => {
+const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClick, followed }: Props) => {
     const [hovered, setHovered] = useState(false);
+
+    if (followed && followed.find(player => player.footballapi_id === playerData.footballapi_id)) return;
 
     const handleMouseEnter = () => {
     setHovered(true);
@@ -22,7 +25,7 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
 
     return (
         <div key={playerData?.id} className='relative animate-in-slow delay'>
-            <h3 className={`absolute rotate-[-90deg] leading-4 h-[20px] truncate text-xl bottom-[80px] left-[-88px] font-extrabold tracking-tighter`}>{playerData?.name || "No name"}</h3>
+            <h3 className={`w-[200px] drop-shadow-lg absolute rotate-[-90deg] leading-4 h-[20px] truncate text-xl bottom-[92px] left-[-106px] font-extrabold tracking-tighter z-10`}>{playerData?.name || "No name"}</h3>
             <div
                 className={`relative bg-transparent rounded-lg w-[150px] h-[200px] ${hovered ? "border border-1 border-gray-500" : "border border-1 border-transparent"}`}
                 onMouseEnter={handleMouseEnter}
@@ -41,7 +44,7 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
                     <p className="text-sm w-full text-center font-thin">{playerData?.age || "No age"} years old</p>
                     <p className="text-sm w-full text-center font-thin">{playerData?.height || "No height"} cm</p>
                 </div>
-                {add ? (
+                {(add) ? (
                     <button
                         className="flex flex-row justify-center items-center gap-1 uppercase text-xs tracking-wide cursor-pointer z-10 absolute bottom-0 h-[50px] bg-btn-background-hover text-foreground hover:bg-indigo-700 hover:text-white font-bold py-2 px-4 rounded-b-lg w-full transition-colors duration-300"
                         type="button"

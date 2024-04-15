@@ -44,10 +44,7 @@ export default async function ProtectedPage() {
   };
 
   const followed = await getFollowed(user.id);
-  let players = [];
-  if (!followed || followed.length == 0) {
-    players = await getPlayers();
-  }
+  const players = await getPlayers();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -70,8 +67,12 @@ export default async function ProtectedPage() {
           {followed && followed.length > 0 ? (
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center">Followed Players</h3>
-              <div className="players-grid flex flex-row justify-center align-center flex-wrap">
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap mb-12 gap-12">
                 {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
+              </div>
+              <h3 className="font-bold text-xl mb-4 w-full text-center">Add more players to get updates from</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-12">
+                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} followed={followed} />)}
               </div>
             </>
           ) : (
