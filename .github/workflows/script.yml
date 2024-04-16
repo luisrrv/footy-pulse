@@ -20,6 +20,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Echo Environment Variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL: $NEXT_PUBLIC_SUPABASE_URL"
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY: $NEXT_PUBLIC_SUPABASE_ANON_KEY"
+          echo "NEXT_PUBLIC_RAPID_API_KEY: $NEXT_PUBLIC_RAPID_API_KEY"
+          echo "NEXT_PUBLIC_RAPID_API_HOST: $NEXT_PUBLIC_RAPID_API_HOST"
+
       - name: Run script
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}  
