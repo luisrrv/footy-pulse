@@ -40,9 +40,9 @@ const PlayerCard: React.FC<Props> = ({ playerData, add, onAddClick, onRemoveClic
                     className={`absolute inset-0 h-[150px] p-2 flex flex-col justify-center align-center text-white transition-opacity duration-300 bg-btn-background-hover rounded-t-lg ${hovered ? 'opacity-85' : 'opacity-0'}`}
                 >
                     {/* <p className="text-sm w-full text-center font-thin">{playerData?.name || "No name"}</p> */}
-                    <p className="text-sm w-full text-center font-thin">{playerData?.nationality || "No nationality"}</p>
-                    <p className="text-sm w-full text-center font-thin">{playerData?.age || "No age"} years old</p>
-                    <p className="text-sm w-full text-center font-thin">{playerData?.height || "No height"} cm</p>
+                    <p className="text-sm w-full text-center font-extrabold tracking-tighter text-foreground">{playerData?.nationality || "No nationality"}</p>
+                    <p className="text-sm w-full text-center font-extrabold tracking-tighter text-foreground">{playerData?.age || "No age"} years old</p>
+                    <p className="text-sm w-full text-center font-extrabold tracking-tighter text-foreground">{playerData?.height || "No height"} cm</p>
                 </div>
                 {(add) ? (
                     <button

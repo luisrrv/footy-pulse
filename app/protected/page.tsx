@@ -66,19 +66,19 @@ export default async function ProtectedPage() {
         <main className="flex-1 flex flex-col gap-6">
           {followed && followed.length > 0 ? (
             <>
-              <h3 className="font-bold text-xl mb-4 w-full text-center">Followed Players</h3>
-              <div className="players-grid flex flex-row justify-center align-center flex-wrap mb-12 gap-12">
+              <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Followed Players</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap mb-12 gap-8">
                 {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
-              <h3 className="font-bold text-xl mb-4 w-full text-center">Add more players to get updates from</h3>
-              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-12">
+              <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Add more players to get updates from</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-8">
                 {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} followed={followed} />)}
               </div>
             </>
           ) : (
             <>
-              <h3 className="font-bold text-xl mb-4 w-full text-center">Choose players to get updates from</h3>
-              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-12">
+              <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Choose players to get updates from</h3>
+              <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-8">
                 {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
             </>

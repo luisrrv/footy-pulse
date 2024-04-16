@@ -5,6 +5,8 @@ import Image from 'next/image';
 import mobile from '@/app/public/mobile_msg.png';
 import pc from '@/app/public/app_choose.png';
 import { ArrowRightIcon, ArrowDownIcon } from '@heroicons/react/24/solid'
+import MypageButton from "../components/MypageButton";
+import { redirect } from "next/navigation";
 // import DeployButton from "../components/DeployButton";
 // import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 // import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
@@ -21,13 +23,25 @@ export default async function Index() {
     }
   };
 
+  const redirectPage = async () => {
+    "use server";
+    redirect("/protected");
+  }
+
   const isSupabaseConnected = canInitSupabaseClient();
+
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm">
+        <div className={`w-full max-w-4xl flex ${user ? "justify-between" : "justify-end"} items-center p-3 text-sm`}>
           {/* <DeployButton /> */}
+          {user && <MypageButton redirectPage={redirectPage} />}
           {isSupabaseConnected && <AuthButton />}
         </div>
       </nav>

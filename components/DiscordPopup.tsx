@@ -17,12 +17,21 @@ const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlCl
     }, [inputValue])
 
     return (
-        <div className="animate-in bg-background/50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50">
-            <div className='absolute top-3 right-3 flex justify-center align-center cursor-pointer text-foreground' onClick={onClose}>
+        <div 
+            className="animate-in bg-background/50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50" 
+            onClick={onClose}
+        >
+            <div 
+                className='absolute top-3 right-3 flex justify-center align-center cursor-pointer text-foreground' 
+                onClick={onClose}
+            >
                 <XMarkIcon className='h-6 w-6' />
             </div>
 
-            <div className="flex flex-col justify-between align-center bg-background text-foreground rounded-lg p-8 max-w-md w-full border border border-1 border-gray-500">
+            <div 
+                className="flex flex-col justify-between align-center bg-background text-foreground rounded-lg p-8 max-w-md w-full border border border-1 border-gray-500 mx-3" 
+                onClick={(e) => {e.preventDefault(); e.stopPropagation();}}
+            >
                 <h2 className="text-lg font-extrabold tracking-tighter  mb-4">Where should we send you player updates?</h2>
                 <label className="text-md mb-3" htmlFor="email">
                     Discord webhook URL:
