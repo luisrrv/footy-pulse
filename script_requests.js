@@ -21,7 +21,7 @@ export async function getUsers() {
 }
 
 export async function getFollowed(userId) {
-    if (!userId) return [];
+    if (!userId) throw new TypeError('Invalid userId provided');
     var supabase = await createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -34,7 +34,7 @@ export async function getFollowed(userId) {
 
     if (error) {
         console.error('Error fetching followed:', error.message);
-        return [];
+        throw new TypeError(error.message);
     }
 
     if (followedIds && followedIds.length) {
@@ -47,7 +47,7 @@ export async function getFollowed(userId) {
         
         if (error) {
             console.error('Error fetching followed:', error.message);
-            return [];
+            throw new TypeError(error.message);
         }
 
         return players;
