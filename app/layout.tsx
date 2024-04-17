@@ -9,6 +9,9 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "FootyPulse",
   description: "Get daily updates on your favorite football players.",
+  icons: {
+    icon: "/icon.ico",
+  },
 };
 
 export default function RootLayout({
