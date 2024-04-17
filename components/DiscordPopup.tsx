@@ -44,7 +44,7 @@ const DiscordPopup: React.FC<DiscordPopupProps> = ({ onClose, onAddDiscordWUrlCl
                         onChange={(e) => {setInputValue(e.target.value)}}
                     />
                 <button
-                    className={`bg-indigo-700 hover:bg-indigo-600 transition-colors duration-300 text-white py-2 px-4 mt-3 rounded-lg min-w-[100px] tracking-wide uppercase font-extrabold ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}
+                    className={`bg-lime-400 hover:bg-lime-300 hover:text-black transition-colors duration-300 text-black py-2 px-4 mt-3 rounded-lg min-w-[100px] tracking-wide uppercase font-extrabold ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}
                     onClick={() => {onAddDiscordWUrlClick(inputValue); onClose()}}
                 >
                     Save

@@ -15,9 +15,9 @@ const PlayerCard: React.FC<Props> = ({ onAddDiscordWUrlClick, webhookUrl }: Prop
         <>
             <button 
                 onClick={()=>{setShowPopup(true)}}
-                className='text-white bg-indigo-700 hover:bg-indigo-600 transition-colors duration-300 rounded-full px-3 py-1'
+                className='text-white bg-lime-400 hover:bg-lime-300 transition-colors duration-300 rounded-full px-3 py-1'
             >
-                <Cog6ToothIcon className='h-5 w-5' />
+                <Cog6ToothIcon className='h-5 w-5 text-black' />
             </button>
             {showPopup && <DiscordPopup onClose={() => setShowPopup(false)} onAddDiscordWUrlClick={onAddDiscordWUrlClick} webhookUrl={webhookUrl} />}
         </>
