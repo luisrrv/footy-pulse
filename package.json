@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest __tests__/script_requests.test.ts"
+    "test": "jest __tests__/script_requests.test.ts",
+    "testindex": "jest __tests__/Index.test.tsx"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.3",

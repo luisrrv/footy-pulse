@@ -32,7 +32,7 @@ async function discordHandler(webhookUrl, data) {
   
   for (const playerData of data) {
     const content = `
-    ${playerData.name}:
+    **${playerData.name}**:
     Apps: ${playerData.apps}
     Goals: ${playerData.goals}
     PKs: ${playerData.penalties}
@@ -49,7 +49,16 @@ async function discordHandler(webhookUrl, data) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({content: content}),
+        body: JSON.stringify(
+          {
+            username: "FootyPulse",
+            // content: content,
+            embeds: [{
+              color: "8702998",
+              description: content
+            }]
+          }
+        ),
       })
         .then((response) => {
           if (!response.ok) {
