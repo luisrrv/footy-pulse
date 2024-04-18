@@ -52,7 +52,7 @@ export default async function ProtectedPage() {
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
             {/* <DeployButton /> */}
-            <p className="flex flex-row align-center gap-1 text-2xl font-extrabold tracking-tighter">FootyPulse<span className="!text-sm font-extralight pt-[6px]">My page</span></p>
+            <p className="flex flex-row align-center gap-1 text-lg font-extrabold tracking-tighter bg-lime-500 rounded-lg text-black px-3 py-1">FootyPulse<span className="!text-sm font-extralight pt-[4px]">My page</span></p>
             <AuthButton />
           </div>
         </nav>

@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex gap-8 justify-center items-center">
         {/* TODO: add FootyPulseLogo component */}
         {/* <FootyPulseLogo /> */}
-        <p className="text-4xl font-extrabold tracking-tighter">FootyPulse</p>
+        <p className="text-4xl font-extrabold tracking-tighter bg-lime-500 rounded-lg text-black px-3 py-1">FootyPulse</p>
       </div>
       <div>
         <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center mb-2">
