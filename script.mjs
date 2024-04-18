@@ -16,7 +16,12 @@ async function discordHandler(webhookUrl, data) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({content: `Your followed player(s) stats from FootyPulse (${currentDate}):\n\n`}),
+      body: JSON.stringify(
+        {
+          username: "FootyPulse",
+          content: `Your followed player(s) stats from FootyPulse (${currentDate}):\n\n`
+        }
+      ),
     })
       .then((response) => {
         if (!response.ok) {
