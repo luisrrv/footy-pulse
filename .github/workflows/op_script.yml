@@ -22,12 +22,16 @@ jobs:
 
       - name: Echo Environment Variables
         run: |
-          echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
-          echo "WEBHOOK_URL: $WEBHOOK_URL"
-          echo "CHANNEL_ID: $CHANNEL_ID"
+            echo "NEXT_PUBLIC_SUPABASE_URL: $NEXT_PUBLIC_SUPABASE_URL"
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY: $NEXT_PUBLIC_SUPABASE_ANON_KEY"
+            echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
+            echo "WEBHOOK_URL: $WEBHOOK_URL"
+            echo "CHANNEL_ID: $CHANNEL_ID"
 
       - name: Run script
         env:
+            NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}  
+            NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}  
             DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
             WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
             CHANNEL_ID: ${{ secrets.CHANNEL_ID }} 
