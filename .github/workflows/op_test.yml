@@ -25,6 +25,8 @@ jobs:
             echo "DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN"
             echo "WEBHOOK_URL: $WEBHOOK_URL"
             echo "CHANNEL_ID: $CHANNEL_ID"
+            echo "SLACK_OAUTH_TOKEN: $SLACK_OAUTH_TOKEN"
+            echo "SLACK_CHANNEL_ID: $SLACK_CHANNEL_ID"
 
       - name: Run script
         env:
@@ -33,4 +35,6 @@ jobs:
             DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
             WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
             CHANNEL_ID: ${{ secrets.CHANNEL_ID }} 
+            SLACK_OAUTH_TOKEN: ${{ secrets.SLACK_OAUTH_TOKEN }} 
+            SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }} 
         run: node discord_bot.mjs

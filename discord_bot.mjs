@@ -1,12 +1,15 @@
 import dotenv from 'dotenv';
 import { fetchMessageIDs, storeMessageID } from './script_requests.js';
-import { Client, GatewayIntentBits, WebhookClient } from 'discord.js';
+import { Client, GatewayIntentBits, /*WebhookClient*/ } from 'discord.js';
+import { WebClient } from '@slack/web-api';
 
 dotenv.config();
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
-const WEBHOOK_URL = process.env.WEBHOOK_URL;
+// const WEBHOOK_URL = process.env.WEBHOOK_URL;
+const SLACK_OAUTH_TOKEN = process.env.SLACK_OAUTH_TOKEN;
+const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -38,9 +41,8 @@ async function fetchNewMessages() {
             console.log("~~~~~~  message to be sent  ~~~~~~\n\n", message.content);
             console.log("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-            // TODO: send somewhere else
-            await sendToWebhook(message.content);
-            await sendToWebhook("SIUUUUUUUU!");
+            await sendToSlack(message.content);
+            await sendToSlack("SIUUUUUUUU!");
         }
     }
 
@@ -50,9 +52,19 @@ async function fetchNewMessages() {
     return;
 }
 
-async function sendToWebhook(messageContent) {
-    const webhook = new WebhookClient({ url: WEBHOOK_URL });
-    await webhook.send(messageContent);
+async function sendToSlack(messageContent) {
+    const web = new WebClient(SLACK_OAUTH_TOKEN);
+    (async () => {
+        try {
+            const result = await web.chat.postMessage({
+                channel: SLACK_CHANNEL_ID,
+                text: messageContent
+            });
+            console.log('Message sent: ', result.ts);
+        } catch (error) {
+            console.error('Error sending message: ', error);
+        }
+    })();
     return;
 }
 
