@@ -13,6 +13,11 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}`);
     await fetchNewMessages();
+    // Gracefully exit
+    setTimeout(() => {
+        client.destroy(); // Disconnect the client (stop the continuous connection)
+        process.exit(0); // Exit node process with code 0 (success)
+    }, 5000);
     return;
 });
 
