@@ -37,11 +37,12 @@ async function fetchNewMessages() {
     }
 
     for (const message of newMessages.values()) {
-        if (/chapter.*release/i.test(message.content.toLowerCase())) {
-            console.log("~~~~~~  message to be sent  ~~~~~~\n\n", message.content);
+        if (/(?=.*\bchapter\b)(?=.*\brelease\b)(?=.*\b1\d{3}\b)/i.test(message.content.toLowerCase())) {
+            let editedMessage = message.content.replace(/@everyone/g, ''); // Remove all occurrences of "@everyone"
+            console.log("~~~~~~  message to be sent  ~~~~~~\n\n", editedMessage);
             console.log("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-            await sendToSlack(message.content);
+            await sendToSlack(editedMessage);
             await sendToSlack("SIUUUUUUUU!");
         }
     }
@@ -51,6 +52,12 @@ async function fetchNewMessages() {
     }
     return;
 }
+
+// async function sendToWebhook(messageContent) {
+//     const webhook = new WebhookClient({ url: WEBHOOK_URL });
+//     await webhook.send(messageContent);
+//     return;
+// }
 
 async function sendToSlack(messageContent) {
     const web = new WebClient(SLACK_OAUTH_TOKEN);
