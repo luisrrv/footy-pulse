@@ -85,7 +85,7 @@ async function sendData(user, playersData) {
       console.error(`Error. user:${user.id} has not set a Discord webhook URL.`);
       return;
     }
-    console.log(`Sending data to user ${user.id}`, playersData);
+    console.log(`Sending player's data to user`);
     await discordHandler(user.discord_webhook_url, playersData);
   } catch (error) {
     console.error(`Error sending data to user ${user.id}:`, error);
