@@ -36,9 +36,13 @@ async function fetchNewMessages() {
 
     for (const message of newMessages.values()) {
         if (/(?=.*\bchapter\b)(?=.*\brelease\b)(?=.*\b1\d{3}\b)/i.test(message.content.toLowerCase())) {
+            console.log("~~ new op chapter message ~~");
             let editedMessage = message.content.replace(/@everyone/g, ''); // Remove all occurrences of "@everyone"
             await sendToSlack(editedMessage);
             await sendToSlack("SIUUUUUUUU!");
+        } else if (message.content.toLowerCase().includes("this is a test")) {
+            console.log("~~ test message ~~");
+            await sendToSlack("Muchas gracias aficion, esto es para vosotros SIUUUUUUUU! - https://www.youtube.com/watch?v=cLGMWX-DSzY");
         }
     }
 
@@ -55,6 +59,7 @@ async function fetchNewMessages() {
 // }
 
 async function sendToSlack(messageContent) {
+    console.log('Sending message to slack...');
     const web = new WebClient(SLACK_OAUTH_TOKEN);
     (async () => {
         try {
@@ -62,6 +67,7 @@ async function sendToSlack(messageContent) {
                 channel: SLACK_CHANNEL_ID,
                 text: messageContent
             });
+            console.log("~~~~~~  result  ~~~~~~", result);
             console.log('Message sent.');
         } catch (error) {
             console.error('Error sending message: ', error);
