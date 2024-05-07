@@ -67,8 +67,8 @@ async function sendToSlack(messageContent) {
                 channel: SLACK_CHANNEL_ID,
                 text: messageContent
             });
-            console.log("~~~~~~  result  ~~~~~~", result);
-            console.log('Message sent.');
+            if(result.ok) console.log('Message sent.');
+            else console.log('Message not sent.');
         } catch (error) {
             console.error('Error sending message: ', error);
         }
