@@ -145,7 +145,7 @@ async function getData() {
           url: 'https://api-football-v1.p.rapidapi.com/v3/players',
           params: {
             id: player?.footballapi_id || 0,
-            season: '2023'
+            season: '2024'
           },
           headers: {
             'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
