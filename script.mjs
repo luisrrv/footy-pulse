@@ -3,6 +3,14 @@ import { getUsers, getFollowed } from './script_requests.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// European seasons run roughly Aug–May and API-Football keys them by start year
+// (2025 = 2025/26). Override with FOOTBALL_SEASON when needed.
+function currentSeason(date = new Date()) {
+  if (process.env.FOOTBALL_SEASON) return process.env.FOOTBALL_SEASON;
+  const year = date.getUTCFullYear();
+  return String(date.getUTCMonth() >= 6 ? year : year - 1); // July onward = new season
+}
+
 async function discordHandler(webhookUrl, data) {
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
@@ -145,7 +153,7 @@ async function getData() {
           url: 'https://api-football-v1.p.rapidapi.com/v3/players',
           params: {
             id: player?.footballapi_id || 0,
-            season: '2024'
+            season: currentSeason()
           },
           headers: {
             'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,

@@ -7,9 +7,6 @@ import pc from '@/app/public/app_choose.png';
 import { ArrowRightIcon, ArrowDownIcon } from '@heroicons/react/24/solid'
 import MypageButton from "../components/MypageButton";
 import { redirect } from "next/navigation";
-// import DeployButton from "../components/DeployButton";
-// import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-// import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -40,7 +37,6 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className={`w-full max-w-4xl flex ${user ? "justify-between" : "justify-end"} items-center p-3 text-sm`}>
-          {/* <DeployButton /> */}
           {user && <MypageButton redirectPage={redirectPage} />}
           {isSupabaseConnected && <AuthButton />}
         </div>
@@ -60,10 +56,6 @@ export default async function Index() {
             <Image className="block self-center m-2" src={mobile.src} alt="Mobile discord message example" width={300} height={300} />
           </div>
         </div>
-        {/* <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main> */}
       </div>
 
       <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">

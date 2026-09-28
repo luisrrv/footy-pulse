@@ -1,4 +1,3 @@
-// import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import { 
@@ -8,7 +7,6 @@ import {
   removePlayerFromFollowed,
 } from "@/utils/supabase/requests";
 import PlayerCard from "@/components/PlayerCard";
-// import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
 // import Header from "@/components/Header";
 import { redirect } from "next/navigation";
 
@@ -51,7 +49,6 @@ export default async function ProtectedPage() {
       <div className="w-full">
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-            {/* <DeployButton /> */}
             <p className="flex flex-row align-center gap-1 text-lg font-extrabold tracking-tighter bg-lime-500 rounded-lg text-black px-3 py-1">FootyPulse<span className="!text-sm font-extralight pt-[4px]">My page</span></p>
             <AuthButton />
           </div>
@@ -83,8 +80,6 @@ export default async function ProtectedPage() {
               </div>
             </>
           )}
-          {/* <h2 className="font-bold text-4xl mb-4">Next steps</h2> */}
-          {/* <FetchDataSteps /> */}
         </main>
       </div>
 
