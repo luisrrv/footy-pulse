@@ -11,7 +11,7 @@ import PlayerCard from "@/components/PlayerCard";
 import { redirect } from "next/navigation";
 
 export default async function ProtectedPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -65,18 +65,18 @@ export default async function ProtectedPage() {
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Followed Players</h3>
               <div className="players-grid flex flex-row justify-center align-center flex-wrap mb-12 gap-8">
-                {followed.map(player => <PlayerCard playerData={player} add={false} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
+                {followed.map(player => <PlayerCard key={player.footballapi_id} playerData={player} add={false} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
               <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Add more players to get updates from</h3>
               <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-8">
-                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} followed={followed} />)}
+                {players.map(player => <PlayerCard key={player.footballapi_id} playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} followed={followed} />)}
               </div>
             </>
           ) : (
             <>
               <h3 className="font-bold text-xl mb-4 w-full text-center tracking-tighter">Choose players to get updates from</h3>
               <div className="players-grid flex flex-row justify-center align-center flex-wrap gap-8">
-                {players.map(player => <PlayerCard playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
+                {players.map(player => <PlayerCard key={player.footballapi_id} playerData={player} add={true} onAddClick={onAddClick} onRemoveClick={onRemoveClick} />)}
               </div>
             </>
           )}

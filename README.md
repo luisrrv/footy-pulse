@@ -56,6 +56,7 @@ flowchart LR
 git clone https://github.com/luisrrv/footy-pulse
 cd footy-pulse
 npm install
+cp .env.example .env         # then fill in your keys
 npm run dev                  # web app on localhost:3000
 node script.mjs              # run the daily digest job once
 ```

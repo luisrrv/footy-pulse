@@ -9,25 +9,15 @@ import MypageButton from "../components/MypageButton";
 import { redirect } from "next/navigation";
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
 
   const redirectPage = async () => {
     "use server";
     redirect("/protected");
   }
 
-  const isSupabaseConnected = canInitSupabaseClient();
+  const isSupabaseConnected = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -47,13 +37,13 @@ export default async function Index() {
         <div className="flex flex-col lg:flex-row justify-center align-center w-full">
           <div className="flex flex-col">
             <p className="w-full text-center font-extrabold tracking-tighter text-3xl">Follow your favorite players</p>
-            <Image className="block self-center m-2 w-full lg:w-[400px] xl:w-[600px] lg:mt-[140px]" src={pc.src} alt="Desktop app palyer choose example" width={300} height={200} />
+            <Image className="block self-center m-2 w-full lg:w-[400px] xl:w-[600px] lg:mt-[140px]" src={pc.src} alt="Desktop app player choose example" width={300} height={200} priority />
           </div>
           <ArrowRightIcon className="hidden lg:block w-6 h-6 self-center" />
           <ArrowDownIcon className="lg:hidden w-6 h-6 self-center mt-8" />
           <div className="flex flex-col">
             <p className="w-full text-center font-extrabold tracking-tighter text-3xl mt-12 lg:mt-0 mb-6">Get daily updates on players stats</p>
-            <Image className="block self-center m-2" src={mobile.src} alt="Mobile discord message example" width={300} height={300} />
+            <Image className="block self-center m-2" src={mobile.src} alt="Mobile discord message example" width={300} height={300} style={{ height: "auto" }} priority />
           </div>
         </div>
       </div>
