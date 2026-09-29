@@ -1,17 +1,6 @@
-import { createClient } from './client';
-
-export const getUsers = async () => {
-    const supabase = await createClient();
-    const { data: users, error } = await supabase
-        .from("users_data")
-        .select();
-
-    if (error) {
-        console.error('Error fetching users:', error.message);
-        return [];
-    }
-    return users;
-}
+// Server-only helpers: the server client carries the signed-in user's session,
+// so row-level security policies can check auth.uid().
+import { createClient } from './server';
 
 export const getFollowed = async (userId: any) => {
     if (!userId) return [];

@@ -46,7 +46,7 @@ flowchart LR
 ## Limitations
 
 - **Season rollover is date-based.** The job switches to the new season each July (API-Football keys seasons by their start year). Set `FOOTBALL_SEASON` to override it.
-- **Webhook URLs are stored per user.** Anyone holding a webhook URL can post to that channel, so read access to `users_data` must be restricted with row-level security.
+- **Webhook URLs are sensitive.** Anyone holding one can post to that channel, so row-level security limits each user to their own `users_data` and `followed` rows. The daily job reads across users with the service-role key, which only lives in GitHub secrets.
 - **No retries.** If API-Football or Discord fails for a user, that user's digest is skipped for the day and the error is logged.
 - **API quota.** One stats request per followed player per day, so usage grows with users × follows.
 
@@ -66,6 +66,7 @@ Environment variables (`.env`, read by both the app and the job):
 ```
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=   # daily job only; never exposed to the browser
 NEXT_PUBLIC_RAPID_API_KEY=
 NEXT_PUBLIC_RAPID_API_HOST=
 FOOTBALL_SEASON=            # optional, e.g. 2025

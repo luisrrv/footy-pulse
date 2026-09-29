@@ -2,11 +2,17 @@ import { createClient } from '@supabase/supabase-js'
 import dotenv from 'dotenv';
 dotenv.config();
 
+// The daily digest job reads every user's rows, so it uses the service-role key
+// (a GitHub secret, never shipped to the browser) and row-level security can
+// stay strict for the web app. Falls back to the anon key for older setups.
+const SUPABASE_KEY =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
 // FOOTYPULSE APP
 export async function getUsers() {
     var supabase = await createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        SUPABASE_KEY
     );
 
     const { data: users, error } = await supabase
@@ -25,7 +31,7 @@ export async function getFollowed(userId) {
     if (!userId) throw new TypeError('Invalid userId provided');
     var supabase = await createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        SUPABASE_KEY
     );
 
     const { data: followedIds, error } = await supabase
